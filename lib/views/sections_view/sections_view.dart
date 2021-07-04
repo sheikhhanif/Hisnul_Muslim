@@ -3,7 +3,7 @@ import 'package:hisnulmuslim/daos/azkar_dao.dart';
 import 'package:hisnulmuslim/helpers/constants.dart';
 import 'package:hisnulmuslim/helpers/db.dart';
 import 'package:hisnulmuslim/helpers/locator.dart';
-import 'package:hisnulmuslim/views/doa_groups_view/dua_groups_view.dart';
+import 'package:hisnulmuslim/views/dua_groups_view/dua_groups_view.dart';
 import 'package:hisnulmuslim/widgets/loading_view.dart';
 
 class SectionsView extends StatelessWidget {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hisnulmuslim/helpers/constants.dart';
 import 'package:hisnulmuslim/views/categories_view/categories_view.dart';
+import 'package:hisnulmuslim/views/drawer_view/drawer_view.dart';
 import 'package:hisnulmuslim/views/favourites_view/favourites_view.dart';
 import 'package:hisnulmuslim/views/search_view/search_view.dart';
 import 'package:hisnulmuslim/views/sections_view/sections_view.dart';
@@ -40,6 +41,7 @@ class _HomeViewState extends State<HomeView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: DrawerView(),
       appBar: AppBar(
         elevation: 0,
         bottom: buildTapBar(),

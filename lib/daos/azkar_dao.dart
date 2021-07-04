@@ -27,7 +27,17 @@ class AzkarDao extends DatabaseAccessor<Db> with _$AzkarDaoMixin {
     return (select(duaGroups)..where((tbl) => tbl.sectionId.equals(id))).get();
   }
 
+  Future<DuaGroup> getDuaGroupsTitleByDuaId(int id) async {
+    return (select(duaGroups)..where((tbl) => tbl.id.equals(id))).getSingle();
+  }
+
   Future<List<Dua>> getDuaByGroupId(int id) async {
     return (select(duas)..where((tbl) => tbl.groupId.equals(id))).get();
+  }
+
+  Future<int> getDuaGroupLength() async {
+    var res = await select(duaGroups).get();
+
+    return res.length;
   }
 }

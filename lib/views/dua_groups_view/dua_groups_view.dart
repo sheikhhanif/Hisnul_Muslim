@@ -38,6 +38,7 @@ class DuaGroupView extends StatelessWidget {
                 return Column(
                   children: [
                     DuaGroupsItem(
+                      sectionTitle: title,
                       onPressed: () {},
                       icon: Icons.ac_unit,
                       title: list?[index].enTitle ?? '',

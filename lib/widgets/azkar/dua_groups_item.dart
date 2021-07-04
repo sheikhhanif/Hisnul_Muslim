@@ -3,6 +3,7 @@ import 'package:hisnulmuslim/daos/azkar_dao.dart';
 import 'package:hisnulmuslim/helpers/constants.dart';
 import 'package:hisnulmuslim/helpers/db.dart';
 import 'package:hisnulmuslim/helpers/locator.dart';
+import 'package:hisnulmuslim/views/dua_view/dua_view.dart';
 
 class DuaGroupsItem extends StatefulWidget {
   const DuaGroupsItem(
@@ -10,9 +11,11 @@ class DuaGroupsItem extends StatefulWidget {
       required this.title,
       required this.icon,
       this.id,
-      required this.onPressed})
+      required this.onPressed,
+      this.sectionTitle})
       : super(key: key);
   final String title;
+  final String? sectionTitle;
   final IconData icon;
   final int? id;
 
@@ -32,33 +35,43 @@ class _DuaGroupsItemState extends State<DuaGroupsItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(left: 8, right: 16, top: 8, bottom: 8),
-      child: Row(
-        children: [
-          IconButton(
-              icon: Icon(
-                widget.icon,
-                color: kBrownTextColor,
-              ),
-              onPressed: () {}),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Text(
-                widget.title,
-                style: TextStyle(color: kAccentColor, fontSize: 17),
+    return GestureDetector(
+      onTap: widget.id == null
+          ? null
+          : () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (_) => DuaView(
+                    title: widget.title,
+                    id: widget.id ?? 0,
+                    sectionTitle: widget.sectionTitle,
+                  ))),
+      child: Container(
+        padding: EdgeInsets.only(left: 8, right: 16, top: 8, bottom: 8),
+        child: Row(
+          children: [
+            IconButton(
+                icon: Icon(
+                  widget.icon,
+                  color: kBrownTextColor,
+                ),
+                onPressed: () {}),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
+                  widget.title,
+                  style: TextStyle(color: kAccentColor, fontSize: 17),
+                ),
               ),
             ),
-          ),
-          if (duas != null)
-            Text(
-              '(${duas?.length ?? ''})',
-              style: TextStyle(
-                color: kBrownTextColor,
-              ),
-            )
-        ],
+            if (duas != null)
+              Text(
+                '(${duas?.length ?? ''})',
+                style: TextStyle(
+                  color: kBrownTextColor,
+                ),
+              )
+          ],
+        ),
       ),
     );
   }
