@@ -5,6 +5,8 @@ import 'package:hisnulmuslim/helpers/db.dart';
 import 'package:hisnulmuslim/helpers/locator.dart';
 import 'package:audioplayers/audioplayers.dart';
 
+import 'dua_widget.dart';
+
 class DuaListView extends StatefulWidget {
   DuaListView({Key? key, required this.id}) : super(key: key);
   final int id;
@@ -27,49 +29,7 @@ class _DuaListViewState extends State<DuaListView> {
       slivers: [
         SliverList(
           delegate: SliverChildBuilderDelegate(
-            (context, index) => Container(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: Text(
-                      duas?[index].arDua ?? '',
-                      style: TextStyle(
-                        fontFamily: 'quran',
-                        fontSize: 35,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: kPrimaryColorLight,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: IconButton(
-                        icon: Icon(Icons.play_arrow_outlined),
-                        onPressed: () async {
-                          await locator<AudioPlayer>().play(
-                              'https://www.hisnulmuslim.com/audio/${duas?[index].id}');
-                        }),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: Text(
-                      duas?[index].enTranslation ?? '',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            (context, index) => DuaWidget(dua: duas![index]),
             childCount: duas?.length ?? 0,
           ),
         ),
@@ -102,3 +62,4 @@ class _DuaListViewState extends State<DuaListView> {
     setState(() {});
   }
 }
+

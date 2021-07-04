@@ -9,7 +9,7 @@ class DuaGroupsItem extends StatefulWidget {
   const DuaGroupsItem(
       {Key? key,
       required this.title,
-      required this.icon,
+      this.icon = Icons.favorite,
       this.id,
       required this.onPressed,
       this.sectionTitle})

@@ -69,7 +69,6 @@ class _DuaViewState extends State<DuaView> {
             itemCount: duaGroupLength,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              print('item builder : current index ${currentIndex}');
 
               return DuaListView(
                 id: currentIndex,
