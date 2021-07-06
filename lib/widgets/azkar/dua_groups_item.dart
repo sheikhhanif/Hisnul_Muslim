@@ -11,15 +11,17 @@ class DuaGroupsItem extends StatefulWidget {
       required this.title,
       this.icon = Icons.favorite,
       this.id,
-      required this.onPressed,
-      this.sectionTitle})
+      this.onPressed,
+      this.sectionTitle,
+      this.list})
       : super(key: key);
   final String title;
   final String? sectionTitle;
   final IconData icon;
   final int? id;
+  final List<Dua>? list;
 
-  final Function onPressed;
+  final Function? onPressed;
 
   @override
   _DuaGroupsItemState createState() => _DuaGroupsItemState();
@@ -34,15 +36,20 @@ class _DuaGroupsItemState extends State<DuaGroupsItem> {
   }
 
   @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    getDuas();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.id == null
-          ? null
+      onTap: widget.onPressed != null && widget.id == null
+          ? () => widget.onPressed!()
           : () => Navigator.of(context).push(MaterialPageRoute(
               builder: (_) => DuaView(
                     title: widget.title,
                     id: widget.id ?? 0,
-                    sectionTitle: widget.sectionTitle,
                   ))),
       child: Container(
         padding: EdgeInsets.only(left: 8, right: 16, top: 8, bottom: 8),
@@ -79,7 +86,8 @@ class _DuaGroupsItemState extends State<DuaGroupsItem> {
   void getDuas() async {
     if (widget.id != null) {
       duas = await locator<AzkarDao>().getDuaByGroupId(widget.id!);
-      setState(() {});
-    }
+    } else if (widget.list != null) duas = widget.list;
+
+    setState(() {});
   }
 }

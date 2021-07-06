@@ -3,13 +3,14 @@ import 'package:hisnulmuslim/daos/azkar_dao.dart';
 import 'package:hisnulmuslim/helpers/constants.dart';
 import 'package:hisnulmuslim/helpers/db.dart';
 import 'package:hisnulmuslim/helpers/locator.dart';
-import 'package:audioplayers/audioplayers.dart';
 
 import 'dua_widget.dart';
 
 class DuaListView extends StatefulWidget {
-  DuaListView({Key? key, required this.id}) : super(key: key);
+  DuaListView({Key? key, required this.id, this.list}) : super(key: key);
   final int id;
+  final List<Dua>? list;
+
   @override
   _DuaListViewState createState() => _DuaListViewState();
 }
@@ -19,6 +20,7 @@ class _DuaListViewState extends State<DuaListView> {
   @override
   void initState() {
     super.initState();
+    print(widget.list?.length);
     getDuaDetails();
   }
 
@@ -58,8 +60,11 @@ class _DuaListViewState extends State<DuaListView> {
   }
 
   void getDuaDetails() async {
-    duas = await locator<AzkarDao>().getDuaByGroupId(widget.id);
+    if (widget.list != null) {
+      duas = widget.list;
+    } else {
+      duas = await locator<AzkarDao>().getDuaByGroupId(widget.id);
+    }
     setState(() {});
   }
 }
-

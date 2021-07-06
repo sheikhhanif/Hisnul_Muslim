@@ -1,44 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:hisnulmuslim/daos/azkar_dao.dart';
 import 'package:hisnulmuslim/helpers/constants.dart';
+import 'package:hisnulmuslim/helpers/db.dart';
+import 'package:hisnulmuslim/helpers/locator.dart';
+import 'package:hisnulmuslim/views/dua_view/dua_view.dart';
 import 'package:hisnulmuslim/widgets/azkar/dua_groups_item.dart';
 
-class FavouritesView extends StatelessWidget {
+class FavouritesView extends StatefulWidget {
   const FavouritesView({Key? key}) : super(key: key);
+
+  @override
+  _FavouritesViewState createState() => _FavouritesViewState();
+}
+
+class _FavouritesViewState extends State<FavouritesView> {
+  List<Dua>? favouritesDua;
+  List<DuaGroup>? bookMarkedDuaGroups;
+
+  @override
+  void initState() {
+    super.initState();
+    getFavouritesDua();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 20),
-      child: CustomScrollView(
-        slivers: [
-          header('MY LISTS'),
-          SliverToBoxAdapter(
-            child: DuaGroupsItem(
-                title: 'My Fav Duas', icon: Icons.favorite, onPressed: () {}),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-                (context, index) => DuaGroupsItem(
-                    title:
-                        'What to say and do when feeling some pain in the body',
-                    icon: Icons.favorite,
-                    // id: 2,
-                    onPressed: () {}),
-                childCount: 10),
-          ),
-          header('BOOKMARKS'),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-                (context, index) => DuaGroupsItem(
-                  id: null,
-                    title: 'What to say and do when ',
-                    icon: Icons.star,
-                    // count: 2,
-                    onPressed: () {}),
-                childCount: 10),
-          ),
-        ],
-      ),
+      child: StreamBuilder<List<DuaGroup>>(
+          stream: locator<AzkarDao>().getBookmarkedDuaGroup(),
+          builder: (context, snapshot) {
+            return CustomScrollView(
+              slivers: [
+                header('MY LISTS'),
+                SliverToBoxAdapter(
+                  child: favouritesDua == null
+                      ? SizedBox()
+                      : DuaGroupsItem(
+                          title: 'My Fav Duas',
+                          list: favouritesDua,
+                          icon: Icons.favorite,
+                          onPressed: favouritesDua!.isEmpty
+                              ? () {}
+                              : () async {
+                                  await Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) => DuaView(
+                                        title: 'My Fav Dua',
+                                        sectionTitle: 'My Fav Dua',
+                                        id: -1,
+                                        duas: favouritesDua,
+                                      ),
+                                    ),
+                                  );
+                                  getFavouritesDua();
+                                },
+                        ),
+                ),
+                header('BOOKMARKS'),
+                if (snapshot.data != null)
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                        (context, index) => DuaGroupsItem(
+                              id: snapshot.data![index].id,
+                              title: snapshot.data![index].enTitle ?? '',
+                              icon: Icons.star,
+                            ),
+                        childCount: snapshot.data!.length),
+                  )
+              ],
+            );
+          }),
     );
   }
 
@@ -57,5 +89,10 @@ class FavouritesView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void getFavouritesDua() async {
+    favouritesDua = await locator<AzkarDao>().getFavouritesDua();
+    setState(() {});
   }
 }

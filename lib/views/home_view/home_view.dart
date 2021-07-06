@@ -44,51 +44,65 @@ class _HomeViewState extends State<HomeView>
       drawer: DrawerView(),
       appBar: AppBar(
         elevation: 0,
-        bottom: buildTapBar(),
+        centerTitle: false,
+        title: Text('حصن المسلم - Dua'),
       ),
-      body: TabBarView(
-        children: views,
-        controller: _controller,
+      body: Column(
+        children: [
+          buildTapBar(),
+          Expanded(
+            child: TabBarView(
+              children: views,
+              controller: _controller,
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  TabBar buildTapBar() {
-    return TabBar(
-      indicator: BoxDecoration(
-        color: kPrimaryColorLight,
+  Widget buildTapBar() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 60),
+      child: TabBar(
+        indicator: BoxDecoration(
+          color: kPrimaryColorLight,
+        ),
+        tabs: [
+          Tab(
+            child: Icon(
+              Icons.border_all,
+              color:
+                  _selectedIndex == 0 ? kAccentColor : const Color(0XFFbdb29f),
+            ),
+          ),
+          Tab(
+            child: Text(
+              'LISTS',
+              style: TextStyle(
+                  color: _selectedIndex == 1
+                      ? kAccentColor
+                      : const Color(0XFFbdb29f),
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          Tab(
+            child: Icon(
+              Icons.star_outline,
+              color:
+                  _selectedIndex == 2 ? kAccentColor : const Color(0XFFbdb29f),
+            ),
+          ),
+          Tab(
+            child: Icon(
+              Icons.search,
+              color:
+                  _selectedIndex == 3 ? kAccentColor : const Color(0XFFbdb29f),
+            ),
+          )
+        ],
+        controller: _controller,
       ),
-      tabs: [
-        Tab(
-          child: Icon(
-            Icons.border_all,
-            color: _selectedIndex == 0 ? kAccentColor : const Color(0XFFbdb29f),
-          ),
-        ),
-        Tab(
-          child: Text(
-            'LISTS',
-            style: TextStyle(
-                color: _selectedIndex == 1
-                    ? kAccentColor
-                    : const Color(0XFFbdb29f),
-                fontWeight: FontWeight.bold),
-          ),
-        ),
-        Tab(
-          child: Icon(
-            Icons.star_outline,
-            color: _selectedIndex == 2 ? kAccentColor : const Color(0XFFbdb29f),
-          ),
-        ),
-        Tab(
-          child: Icon(
-            Icons.search,
-            color: _selectedIndex == 3 ? kAccentColor : const Color(0XFFbdb29f),
-          ),
-        )
-      ],
-      controller: _controller,
     );
   }
 }

@@ -328,14 +328,14 @@ class DuaGroup extends DataClass implements Insertable<DuaGroup> {
   final String? enTitle;
   final String? bnTitle;
   final int? categoryId;
-  final int? sectionId;
+  final bool isBookmark;
   DuaGroup(
       {required this.id,
       this.arTitle,
       this.enTitle,
       this.bnTitle,
       this.categoryId,
-      this.sectionId});
+      required this.isBookmark});
   factory DuaGroup.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -350,8 +350,8 @@ class DuaGroup extends DataClass implements Insertable<DuaGroup> {
           .mapFromDatabaseResponse(data['${effectivePrefix}bn_title']),
       categoryId: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}category_id']),
-      sectionId: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}section_id']),
+      isBookmark: const BoolType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}is_bookmark'])!,
     );
   }
   @override
@@ -370,9 +370,7 @@ class DuaGroup extends DataClass implements Insertable<DuaGroup> {
     if (!nullToAbsent || categoryId != null) {
       map['category_id'] = Variable<int?>(categoryId);
     }
-    if (!nullToAbsent || sectionId != null) {
-      map['section_id'] = Variable<int?>(sectionId);
-    }
+    map['is_bookmark'] = Variable<bool>(isBookmark);
     return map;
   }
 
@@ -391,9 +389,7 @@ class DuaGroup extends DataClass implements Insertable<DuaGroup> {
       categoryId: categoryId == null && nullToAbsent
           ? const Value.absent()
           : Value(categoryId),
-      sectionId: sectionId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(sectionId),
+      isBookmark: Value(isBookmark),
     );
   }
 
@@ -406,7 +402,7 @@ class DuaGroup extends DataClass implements Insertable<DuaGroup> {
       enTitle: serializer.fromJson<String?>(json['enTitle']),
       bnTitle: serializer.fromJson<String?>(json['bnTitle']),
       categoryId: serializer.fromJson<int?>(json['categoryId']),
-      sectionId: serializer.fromJson<int?>(json['sectionId']),
+      isBookmark: serializer.fromJson<bool>(json['isBookmark']),
     );
   }
   @override
@@ -418,7 +414,7 @@ class DuaGroup extends DataClass implements Insertable<DuaGroup> {
       'enTitle': serializer.toJson<String?>(enTitle),
       'bnTitle': serializer.toJson<String?>(bnTitle),
       'categoryId': serializer.toJson<int?>(categoryId),
-      'sectionId': serializer.toJson<int?>(sectionId),
+      'isBookmark': serializer.toJson<bool>(isBookmark),
     };
   }
 
@@ -428,14 +424,14 @@ class DuaGroup extends DataClass implements Insertable<DuaGroup> {
           String? enTitle,
           String? bnTitle,
           int? categoryId,
-          int? sectionId}) =>
+          bool? isBookmark}) =>
       DuaGroup(
         id: id ?? this.id,
         arTitle: arTitle ?? this.arTitle,
         enTitle: enTitle ?? this.enTitle,
         bnTitle: bnTitle ?? this.bnTitle,
         categoryId: categoryId ?? this.categoryId,
-        sectionId: sectionId ?? this.sectionId,
+        isBookmark: isBookmark ?? this.isBookmark,
       );
   @override
   String toString() {
@@ -445,7 +441,7 @@ class DuaGroup extends DataClass implements Insertable<DuaGroup> {
           ..write('enTitle: $enTitle, ')
           ..write('bnTitle: $bnTitle, ')
           ..write('categoryId: $categoryId, ')
-          ..write('sectionId: $sectionId')
+          ..write('isBookmark: $isBookmark')
           ..write(')'))
         .toString();
   }
@@ -458,7 +454,7 @@ class DuaGroup extends DataClass implements Insertable<DuaGroup> {
           $mrjc(
               enTitle.hashCode,
               $mrjc(bnTitle.hashCode,
-                  $mrjc(categoryId.hashCode, sectionId.hashCode))))));
+                  $mrjc(categoryId.hashCode, isBookmark.hashCode))))));
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -468,7 +464,7 @@ class DuaGroup extends DataClass implements Insertable<DuaGroup> {
           other.enTitle == this.enTitle &&
           other.bnTitle == this.bnTitle &&
           other.categoryId == this.categoryId &&
-          other.sectionId == this.sectionId);
+          other.isBookmark == this.isBookmark);
 }
 
 class DuaGroupsCompanion extends UpdateCompanion<DuaGroup> {
@@ -477,14 +473,14 @@ class DuaGroupsCompanion extends UpdateCompanion<DuaGroup> {
   final Value<String?> enTitle;
   final Value<String?> bnTitle;
   final Value<int?> categoryId;
-  final Value<int?> sectionId;
+  final Value<bool> isBookmark;
   const DuaGroupsCompanion({
     this.id = const Value.absent(),
     this.arTitle = const Value.absent(),
     this.enTitle = const Value.absent(),
     this.bnTitle = const Value.absent(),
     this.categoryId = const Value.absent(),
-    this.sectionId = const Value.absent(),
+    this.isBookmark = const Value.absent(),
   });
   DuaGroupsCompanion.insert({
     this.id = const Value.absent(),
@@ -492,7 +488,7 @@ class DuaGroupsCompanion extends UpdateCompanion<DuaGroup> {
     this.enTitle = const Value.absent(),
     this.bnTitle = const Value.absent(),
     this.categoryId = const Value.absent(),
-    this.sectionId = const Value.absent(),
+    this.isBookmark = const Value.absent(),
   });
   static Insertable<DuaGroup> custom({
     Expression<int>? id,
@@ -500,7 +496,7 @@ class DuaGroupsCompanion extends UpdateCompanion<DuaGroup> {
     Expression<String?>? enTitle,
     Expression<String?>? bnTitle,
     Expression<int?>? categoryId,
-    Expression<int?>? sectionId,
+    Expression<bool>? isBookmark,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -508,7 +504,7 @@ class DuaGroupsCompanion extends UpdateCompanion<DuaGroup> {
       if (enTitle != null) 'en_title': enTitle,
       if (bnTitle != null) 'bn_title': bnTitle,
       if (categoryId != null) 'category_id': categoryId,
-      if (sectionId != null) 'section_id': sectionId,
+      if (isBookmark != null) 'is_bookmark': isBookmark,
     });
   }
 
@@ -518,14 +514,14 @@ class DuaGroupsCompanion extends UpdateCompanion<DuaGroup> {
       Value<String?>? enTitle,
       Value<String?>? bnTitle,
       Value<int?>? categoryId,
-      Value<int?>? sectionId}) {
+      Value<bool>? isBookmark}) {
     return DuaGroupsCompanion(
       id: id ?? this.id,
       arTitle: arTitle ?? this.arTitle,
       enTitle: enTitle ?? this.enTitle,
       bnTitle: bnTitle ?? this.bnTitle,
       categoryId: categoryId ?? this.categoryId,
-      sectionId: sectionId ?? this.sectionId,
+      isBookmark: isBookmark ?? this.isBookmark,
     );
   }
 
@@ -547,8 +543,8 @@ class DuaGroupsCompanion extends UpdateCompanion<DuaGroup> {
     if (categoryId.present) {
       map['category_id'] = Variable<int?>(categoryId.value);
     }
-    if (sectionId.present) {
-      map['section_id'] = Variable<int?>(sectionId.value);
+    if (isBookmark.present) {
+      map['is_bookmark'] = Variable<bool>(isBookmark.value);
     }
     return map;
   }
@@ -561,7 +557,7 @@ class DuaGroupsCompanion extends UpdateCompanion<DuaGroup> {
           ..write('enTitle: $enTitle, ')
           ..write('bnTitle: $bnTitle, ')
           ..write('categoryId: $categoryId, ')
-          ..write('sectionId: $sectionId')
+          ..write('isBookmark: $isBookmark')
           ..write(')'))
         .toString();
   }
@@ -624,20 +620,17 @@ class $DuaGroupsTable extends DuaGroups
     );
   }
 
-  final VerificationMeta _sectionIdMeta = const VerificationMeta('sectionId');
+  final VerificationMeta _isBookmarkMeta = const VerificationMeta('isBookmark');
   @override
-  late final GeneratedIntColumn sectionId = _constructSectionId();
-  GeneratedIntColumn _constructSectionId() {
-    return GeneratedIntColumn(
-      'section_id',
-      $tableName,
-      true,
-    );
+  late final GeneratedBoolColumn isBookmark = _constructIsBookmark();
+  GeneratedBoolColumn _constructIsBookmark() {
+    return GeneratedBoolColumn('is_bookmark', $tableName, false,
+        defaultValue: const Constant(false));
   }
 
   @override
   List<GeneratedColumn> get $columns =>
-      [id, arTitle, enTitle, bnTitle, categoryId, sectionId];
+      [id, arTitle, enTitle, bnTitle, categoryId, isBookmark];
   @override
   $DuaGroupsTable get asDslTable => this;
   @override
@@ -670,9 +663,11 @@ class $DuaGroupsTable extends DuaGroups
           categoryId.isAcceptableOrUnknown(
               data['category_id']!, _categoryIdMeta));
     }
-    if (data.containsKey('section_id')) {
-      context.handle(_sectionIdMeta,
-          sectionId.isAcceptableOrUnknown(data['section_id']!, _sectionIdMeta));
+    if (data.containsKey('is_bookmark')) {
+      context.handle(
+          _isBookmarkMeta,
+          isBookmark.isAcceptableOrUnknown(
+              data['is_bookmark']!, _isBookmarkMeta));
     }
     return context;
   }
@@ -688,320 +683,6 @@ class $DuaGroupsTable extends DuaGroups
   @override
   $DuaGroupsTable createAlias(String alias) {
     return $DuaGroupsTable(_db, alias);
-  }
-}
-
-class Section extends DataClass implements Insertable<Section> {
-  final int id;
-  final String? image;
-  final String? arTitle;
-  final String? enTitle;
-  final String? bnTitle;
-  Section(
-      {required this.id, this.image, this.arTitle, this.enTitle, this.bnTitle});
-  factory Section.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String? prefix}) {
-    final effectivePrefix = prefix ?? '';
-    return Section(
-      id: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-      image: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}image']),
-      arTitle: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}ar_title']),
-      enTitle: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}en_title']),
-      bnTitle: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}bn_title']),
-    );
-  }
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    if (!nullToAbsent || image != null) {
-      map['image'] = Variable<String?>(image);
-    }
-    if (!nullToAbsent || arTitle != null) {
-      map['ar_title'] = Variable<String?>(arTitle);
-    }
-    if (!nullToAbsent || enTitle != null) {
-      map['en_title'] = Variable<String?>(enTitle);
-    }
-    if (!nullToAbsent || bnTitle != null) {
-      map['bn_title'] = Variable<String?>(bnTitle);
-    }
-    return map;
-  }
-
-  SectionsCompanion toCompanion(bool nullToAbsent) {
-    return SectionsCompanion(
-      id: Value(id),
-      image:
-          image == null && nullToAbsent ? const Value.absent() : Value(image),
-      arTitle: arTitle == null && nullToAbsent
-          ? const Value.absent()
-          : Value(arTitle),
-      enTitle: enTitle == null && nullToAbsent
-          ? const Value.absent()
-          : Value(enTitle),
-      bnTitle: bnTitle == null && nullToAbsent
-          ? const Value.absent()
-          : Value(bnTitle),
-    );
-  }
-
-  factory Section.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
-    return Section(
-      id: serializer.fromJson<int>(json['id']),
-      image: serializer.fromJson<String?>(json['image']),
-      arTitle: serializer.fromJson<String?>(json['arTitle']),
-      enTitle: serializer.fromJson<String?>(json['enTitle']),
-      bnTitle: serializer.fromJson<String?>(json['bnTitle']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'image': serializer.toJson<String?>(image),
-      'arTitle': serializer.toJson<String?>(arTitle),
-      'enTitle': serializer.toJson<String?>(enTitle),
-      'bnTitle': serializer.toJson<String?>(bnTitle),
-    };
-  }
-
-  Section copyWith(
-          {int? id,
-          String? image,
-          String? arTitle,
-          String? enTitle,
-          String? bnTitle}) =>
-      Section(
-        id: id ?? this.id,
-        image: image ?? this.image,
-        arTitle: arTitle ?? this.arTitle,
-        enTitle: enTitle ?? this.enTitle,
-        bnTitle: bnTitle ?? this.bnTitle,
-      );
-  @override
-  String toString() {
-    return (StringBuffer('Section(')
-          ..write('id: $id, ')
-          ..write('image: $image, ')
-          ..write('arTitle: $arTitle, ')
-          ..write('enTitle: $enTitle, ')
-          ..write('bnTitle: $bnTitle')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => $mrjf($mrjc(
-      id.hashCode,
-      $mrjc(image.hashCode,
-          $mrjc(arTitle.hashCode, $mrjc(enTitle.hashCode, bnTitle.hashCode)))));
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is Section &&
-          other.id == this.id &&
-          other.image == this.image &&
-          other.arTitle == this.arTitle &&
-          other.enTitle == this.enTitle &&
-          other.bnTitle == this.bnTitle);
-}
-
-class SectionsCompanion extends UpdateCompanion<Section> {
-  final Value<int> id;
-  final Value<String?> image;
-  final Value<String?> arTitle;
-  final Value<String?> enTitle;
-  final Value<String?> bnTitle;
-  const SectionsCompanion({
-    this.id = const Value.absent(),
-    this.image = const Value.absent(),
-    this.arTitle = const Value.absent(),
-    this.enTitle = const Value.absent(),
-    this.bnTitle = const Value.absent(),
-  });
-  SectionsCompanion.insert({
-    this.id = const Value.absent(),
-    this.image = const Value.absent(),
-    this.arTitle = const Value.absent(),
-    this.enTitle = const Value.absent(),
-    this.bnTitle = const Value.absent(),
-  });
-  static Insertable<Section> custom({
-    Expression<int>? id,
-    Expression<String?>? image,
-    Expression<String?>? arTitle,
-    Expression<String?>? enTitle,
-    Expression<String?>? bnTitle,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (image != null) 'image': image,
-      if (arTitle != null) 'ar_title': arTitle,
-      if (enTitle != null) 'en_title': enTitle,
-      if (bnTitle != null) 'bn_title': bnTitle,
-    });
-  }
-
-  SectionsCompanion copyWith(
-      {Value<int>? id,
-      Value<String?>? image,
-      Value<String?>? arTitle,
-      Value<String?>? enTitle,
-      Value<String?>? bnTitle}) {
-    return SectionsCompanion(
-      id: id ?? this.id,
-      image: image ?? this.image,
-      arTitle: arTitle ?? this.arTitle,
-      enTitle: enTitle ?? this.enTitle,
-      bnTitle: bnTitle ?? this.bnTitle,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (image.present) {
-      map['image'] = Variable<String?>(image.value);
-    }
-    if (arTitle.present) {
-      map['ar_title'] = Variable<String?>(arTitle.value);
-    }
-    if (enTitle.present) {
-      map['en_title'] = Variable<String?>(enTitle.value);
-    }
-    if (bnTitle.present) {
-      map['bn_title'] = Variable<String?>(bnTitle.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('SectionsCompanion(')
-          ..write('id: $id, ')
-          ..write('image: $image, ')
-          ..write('arTitle: $arTitle, ')
-          ..write('enTitle: $enTitle, ')
-          ..write('bnTitle: $bnTitle')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $SectionsTable extends Sections with TableInfo<$SectionsTable, Section> {
-  final GeneratedDatabase _db;
-  final String? _alias;
-  $SectionsTable(this._db, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedIntColumn id = _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
-  }
-
-  final VerificationMeta _imageMeta = const VerificationMeta('image');
-  @override
-  late final GeneratedTextColumn image = _constructImage();
-  GeneratedTextColumn _constructImage() {
-    return GeneratedTextColumn(
-      'image',
-      $tableName,
-      true,
-    );
-  }
-
-  final VerificationMeta _arTitleMeta = const VerificationMeta('arTitle');
-  @override
-  late final GeneratedTextColumn arTitle = _constructArTitle();
-  GeneratedTextColumn _constructArTitle() {
-    return GeneratedTextColumn(
-      'ar_title',
-      $tableName,
-      true,
-    );
-  }
-
-  final VerificationMeta _enTitleMeta = const VerificationMeta('enTitle');
-  @override
-  late final GeneratedTextColumn enTitle = _constructEnTitle();
-  GeneratedTextColumn _constructEnTitle() {
-    return GeneratedTextColumn(
-      'en_title',
-      $tableName,
-      true,
-    );
-  }
-
-  final VerificationMeta _bnTitleMeta = const VerificationMeta('bnTitle');
-  @override
-  late final GeneratedTextColumn bnTitle = _constructBnTitle();
-  GeneratedTextColumn _constructBnTitle() {
-    return GeneratedTextColumn(
-      'bn_title',
-      $tableName,
-      true,
-    );
-  }
-
-  @override
-  List<GeneratedColumn> get $columns => [id, image, arTitle, enTitle, bnTitle];
-  @override
-  $SectionsTable get asDslTable => this;
-  @override
-  String get $tableName => _alias ?? 'Section';
-  @override
-  final String actualTableName = 'Section';
-  @override
-  VerificationContext validateIntegrity(Insertable<Section> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('image')) {
-      context.handle(
-          _imageMeta, image.isAcceptableOrUnknown(data['image']!, _imageMeta));
-    }
-    if (data.containsKey('ar_title')) {
-      context.handle(_arTitleMeta,
-          arTitle.isAcceptableOrUnknown(data['ar_title']!, _arTitleMeta));
-    }
-    if (data.containsKey('en_title')) {
-      context.handle(_enTitleMeta,
-          enTitle.isAcceptableOrUnknown(data['en_title']!, _enTitleMeta));
-    }
-    if (data.containsKey('bn_title')) {
-      context.handle(_bnTitleMeta,
-          bnTitle.isAcceptableOrUnknown(data['bn_title']!, _bnTitleMeta));
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  Section map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return Section.fromData(data, _db,
-        prefix: tablePrefix != null ? '$tablePrefix.' : null);
-  }
-
-  @override
-  $SectionsTable createAlias(String alias) {
-    return $SectionsTable(_db, alias);
   }
 }
 
@@ -1480,12 +1161,11 @@ abstract class _$Db extends GeneratedDatabase {
   _$Db(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   late final $CategoriesTable categories = $CategoriesTable(this);
   late final $DuaGroupsTable duaGroups = $DuaGroupsTable(this);
-  late final $SectionsTable sections = $SectionsTable(this);
   late final $DuasTable duas = $DuasTable(this);
   late final AzkarDao azkarDao = AzkarDao(this as Db);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [categories, duaGroups, sections, duas];
+      [categories, duaGroups, duas];
 }

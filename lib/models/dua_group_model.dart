@@ -7,7 +7,7 @@ class DuaGroups extends Table {
   TextColumn get enTitle => text().nullable()();
   TextColumn get bnTitle => text().nullable()();
   IntColumn get categoryId => integer().nullable()();
-  IntColumn get sectionId => integer().nullable()();
+  BoolColumn get isBookmark => boolean().withDefault(const Constant(false))();
 
   @override
   String? get tableName => 'Dua_Group';

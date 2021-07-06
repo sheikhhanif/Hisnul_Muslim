@@ -9,6 +9,5 @@ part of 'azkar_dao.dart';
 mixin _$AzkarDaoMixin on DatabaseAccessor<Db> {
   $CategoriesTable get categories => attachedDatabase.categories;
   $DuaGroupsTable get duaGroups => attachedDatabase.duaGroups;
-  $SectionsTable get sections => attachedDatabase.sections;
   $DuasTable get duas => attachedDatabase.duas;
 }

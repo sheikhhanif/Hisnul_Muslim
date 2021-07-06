@@ -115,7 +115,6 @@ class _SearchViewState extends State<SearchView> {
             delegate: SliverChildBuilderDelegate(
                 (_, index) => DuaGroupsItem(
                       title: duaGroups?[index].enTitle ?? '',
-                      onPressed: () {},
                       id: duaGroups?[index].id,
                     ),
                 childCount: duaGroups!.length),

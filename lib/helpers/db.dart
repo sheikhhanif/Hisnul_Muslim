@@ -4,7 +4,6 @@ import 'package:hisnulmuslim/daos/azkar_dao.dart';
 import 'package:hisnulmuslim/models/category_model.dart';
 import 'package:hisnulmuslim/models/dua_group_model.dart';
 import 'package:hisnulmuslim/models/dua_model.dart';
-import 'package:hisnulmuslim/models/section_model.dart';
 import 'package:moor/ffi.dart';
 import 'package:moor/moor.dart';
 import 'package:path_provider/path_provider.dart';
@@ -17,7 +16,6 @@ LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, 'app.db'));
-    print(file.path);
     if (!await file.exists()) {
       // Extract the pre-populated datbaase file from assets
       final data = await rootBundle.load('assets/db/app.db');
@@ -29,12 +27,10 @@ LazyDatabase _openConnection() {
   });
 }
 
-@UseMoor(tables: [Categories, DuaGroups, Sections, Duas], daos: [AzkarDao])
+@UseMoor(tables: [Categories, DuaGroups, Duas], daos: [AzkarDao])
 class Db extends _$Db {
   Db() : super(_openConnection());
 
   @override
   int get schemaVersion => 1;
-
-  Future<List<Category>> get allTodoEntries => select(categories).get();
 }

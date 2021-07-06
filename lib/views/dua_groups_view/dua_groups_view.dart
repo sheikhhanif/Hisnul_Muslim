@@ -6,14 +6,9 @@ import 'package:hisnulmuslim/widgets/azkar/dua_groups_item.dart';
 import 'package:hisnulmuslim/widgets/loading_view.dart';
 
 class DuaGroupView extends StatelessWidget {
-  const DuaGroupView(
-      {Key? key,
-      required this.id,
-      this.isCategory = false,
-      required this.title})
+  const DuaGroupView({Key? key, required this.id, required this.title})
       : super(key: key);
   final int id;
-  final bool isCategory;
   final String title;
 
   @override
@@ -23,9 +18,7 @@ class DuaGroupView extends StatelessWidget {
         title: Text(title),
       ),
       body: FutureBuilder<List<DuaGroup>>(
-          future: isCategory
-              ? locator<AzkarDao>().getDuaGroupsByCategoryId(id)
-              : locator<AzkarDao>().getDuaGroupsBySectionId(id),
+          future: locator<AzkarDao>().getDuaGroupsByCategoryId(id),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting)
               return LoadingView();
@@ -39,7 +32,6 @@ class DuaGroupView extends StatelessWidget {
                   children: [
                     DuaGroupsItem(
                       sectionTitle: title,
-                      onPressed: () {},
                       icon: Icons.ac_unit,
                       title: list?[index].enTitle ?? '',
                       id: list?[index].id,

@@ -26,7 +26,6 @@ class CategoriesView extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (_) => DuaGroupView(
                     id: list?[index].id ?? 0,
-                    isCategory: true,
                     title: list?[index].enTitle ?? '',
                   ),
                 ),
