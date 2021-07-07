@@ -67,6 +67,8 @@ class _HomeViewState extends State<HomeView>
       child: TabBar(
         indicator: BoxDecoration(
           color: kPrimaryColorLight,
+          borderRadius: BorderRadius.circular(30)
+
         ),
         tabs: [
           Tab(
@@ -77,13 +79,10 @@ class _HomeViewState extends State<HomeView>
             ),
           ),
           Tab(
-            child: Text(
-              'LISTS',
-              style: TextStyle(
-                  color: _selectedIndex == 1
-                      ? kAccentColor
-                      : const Color(0XFFbdb29f),
-                  fontWeight: FontWeight.bold),
+            child: Icon(
+              Icons.list_outlined,
+              color:
+              _selectedIndex == 1 ? kAccentColor : const Color(0XFFbdb29f),
             ),
           ),
           Tab(
