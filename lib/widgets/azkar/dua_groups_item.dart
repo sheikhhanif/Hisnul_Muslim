@@ -9,7 +9,7 @@ class DuaGroupsItem extends StatefulWidget {
   const DuaGroupsItem(
       {Key? key,
       required this.title,
-      this.icon = Icons.favorite,
+      this.icon = Icons.ac_unit,
       this.id,
       this.onPressed,
       this.sectionTitle,
@@ -52,6 +52,10 @@ class _DuaGroupsItemState extends State<DuaGroupsItem> {
                     id: widget.id ?? 0,
                   ))),
       child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: kPrimaryColorLight,
+        ),
         padding: EdgeInsets.only(left: 8, right: 16, top: 8, bottom: 8),
         child: Row(
           children: [
