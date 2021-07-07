@@ -37,7 +37,7 @@ class _FavouritesViewState extends State<FavouritesView> {
                   child: favouritesDua == null
                       ? SizedBox()
                       : DuaGroupsItem(
-                          title: 'My Fav Duas',
+                          title: 'My Favorite Duas',
                           list: favouritesDua,
                           icon: Icons.favorite,
                           onPressed: favouritesDua!.isEmpty
@@ -46,8 +46,8 @@ class _FavouritesViewState extends State<FavouritesView> {
                                   await Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (_) => DuaView(
-                                        title: 'My Fav Dua',
-                                        sectionTitle: 'My Fav Dua',
+                                        title: 'My Favorite Dua',
+                                        sectionTitle: 'My Favorite Dua',
                                         id: -1,
                                         duas: favouritesDua,
                                       ),
