@@ -19,7 +19,7 @@ class SectionsView extends StatelessWidget {
           return ListView.separated(
               itemCount: list?.length ?? 0,
               separatorBuilder: (context, index) => SizedBox(
-                    height: 20,
+                    height: 15,
                   ),
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               itemBuilder: (context, index) {
