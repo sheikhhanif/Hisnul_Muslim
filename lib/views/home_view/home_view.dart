@@ -63,7 +63,7 @@ class _HomeViewState extends State<HomeView>
 
   Widget buildTapBar() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 60),
+      margin: EdgeInsets.fromLTRB(60,15,60,2),
       child: TabBar(
         indicator: BoxDecoration(
           color: kPrimaryColorLight,
@@ -71,7 +71,7 @@ class _HomeViewState extends State<HomeView>
         tabs: [
           Tab(
             child: Icon(
-              Icons.border_all,
+              Icons.home_outlined,
               color:
                   _selectedIndex == 0 ? kAccentColor : const Color(0XFFbdb29f),
             ),
