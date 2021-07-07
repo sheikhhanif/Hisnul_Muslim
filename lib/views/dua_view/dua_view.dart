@@ -137,7 +137,7 @@ class _DuaViewState extends State<DuaView> {
                 child: IconButton(
                     icon: Icon(
                       isBookMarked ? Icons.star : Icons.star_outline,
-                      size: 35,
+                      size: 27,
                     ),
                     onPressed: () async {
                       var duaGroup = await locator<AzkarDao>()
